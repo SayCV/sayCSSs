@@ -16,7 +16,8 @@ export script_common="common.sh"
 # get dir of the script
 common_script_path=`dirname "$0"`
 
-common_date="$(date +"%Y-%m-%d-%H-%M-%S")"
+common_date="$(date +"%Y-%m-%d : %H-%M-%S")"
+common_filename_date="$(date +"%Y_%m_%d_%H_%M_%S")"
 
 # displays error message and exits
 error() {
