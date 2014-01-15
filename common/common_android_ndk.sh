@@ -30,6 +30,7 @@ function export_android_ndk_envirment {
 	export NDK_PLATFORM_LIB=$NDK_PLATFORM_ROOT/usr/lib
 	
 	export SYSROOT=$NDK_PLATFORM_ROOT
+	export CFLAGS="--sysroot=$SYSROOT/"
 #	export CC="$NDK_TOOLCHAINS_ROOT/bin/arm-linux-androideabi-gcc --sysroot=$SYSROOT"
 	
 	print_done

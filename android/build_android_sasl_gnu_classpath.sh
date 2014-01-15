@@ -46,7 +46,7 @@ function fnct_configure_gnu_classpath_for_android {
 			--prefix=/tmp/classpath \
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
 			--host=arm-linux-androideabi \
-			CFLAGS="--sysroot=$SYSROOT" \
+			CFLAGS="--sysroot=$SYSROOT -nostdlib" \
 		|| die
 		touch stamp_configure_gnu_classpath_for_android_h
 	fi
