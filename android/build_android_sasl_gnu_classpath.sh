@@ -38,6 +38,7 @@ function fnct_autogen_gnu_classpath_for_android {
 	fi
 }
 
+#			CFLAGS="--sysroot=$SYSROOT -nostdlib -I$NDK_TOOLCHAINS_INCLUDE -I$NDK_PLATFORM_INCLUDE"
 function fnct_configure_gnu_classpath_for_android {
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_configure_gnu_classpath_for_android_h"; then
@@ -46,7 +47,8 @@ function fnct_configure_gnu_classpath_for_android {
 			--prefix=/tmp/classpath \
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
 			--host=arm-linux-androideabi \
-			CFLAGS="--sysroot=$SYSROOT -nostdlib" \
+			--with-sysroot=$SYSROOT \
+			CFLAGS="-nostdlib" \
 		|| die
 		touch stamp_configure_gnu_classpath_for_android_h
 	fi
