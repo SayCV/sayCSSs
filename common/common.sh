@@ -107,3 +107,15 @@ function UNPACK_ARCHIVE() {
     $(if $(filter %.exe,$(1)),cp '$(1)' ., \
     $(error Unknown archive format: $(1)))))))))
 }
+
+function _common_fnct_setting_skip_checking_stamp_h {
+     if test $boolean_skip_checking_stamp_h -eq "0"; then
+        export suffix_skip_checking_stamp_h="null"
+     else
+        export suffix_skip_checking_stamp_h=""
+     fi
+}
+
+print_headline "Checking that script is using UNIX line endings"
+mount | grep textmode && die
+print_done
