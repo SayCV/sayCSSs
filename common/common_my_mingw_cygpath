@@ -1,0 +1,43 @@
+#!/bin/env perl
+# DOS to UNIX path conversion
+# ? John S. Peterson. License GNU GPL 3.
+use strict;
+use Getopt::Std;
+
+# usage
+if ($#ARGV == -1) {
+    print 'Usage: cygpath (-w) NAME...
+
+Convert Unix and Windows format paths
+
+Output type options:
+
+  -w, --windows         print Windows form of NAMEs (C:\WINNT)
+';
+    exit 0;
+}
+
+# option
+my %opt;
+getopts('w', \%opt);
+
+# convert path
+my @r;
+foreach my $e (@ARGV) {
+    if ($opt{w}) {
+        # add drive letter suffix
+        $e =~ s,^\/([A-Za-z])\/,\1:\/,;
+        $e =~ s,\/,\\,g;
+
+    } else {
+        $e =~ s,\\,\/,g;
+        # add leading slash
+        $e = "/$e";
+        # remove drive letter suffix
+        $e =~ s,:,,;
+    }
+
+    push @r, $e;
+}
+
+print join("\n", @r);

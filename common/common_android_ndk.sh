@@ -19,7 +19,9 @@ common_android_ndk_script_path=`dirname "$0"`
 function export_android_ndk_envirment {
 	print_headline "Export Android NDK Envirment"
 	
-	export NDK_ROOT="$NDK_ROOT"
+	NDK_ROOT=$(common_my_mingw_cygpath.sh $NDK_ROOT)
+	echo $NDK_ROOT
+	export $NDK_ROOT
 	export NDK_TOOLCHAINS_ROOT="$NDK_ROOT/toolchains/arm-linux-androideabi-4.8/prebuilt/windows"
 	export NDK_TOOLCHAINS_PREFIX="$NDK_TOOLCHAINS_ROOT/bin/arm-linux-androideabi"
 	export NDK_TOOLCHAINS_INCLUDE="$NDK_TOOLCHAINS_ROOT/lib/gcc/arm-linux-androideabi/4.8/include-fixed"
