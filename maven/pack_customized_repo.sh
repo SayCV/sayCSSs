@@ -34,7 +34,7 @@ function main {
 	print_headline "Excute $filename"
 	cd $MAVEN_HOME
 	#pack_archive maven_repo.tar.gz repo
-	pack_archive maven_repo.7z repo
+	pack_archive maven_repo_$common_filename_date.7z repo
 }
 
 main || die

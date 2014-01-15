@@ -1,0 +1,16 @@
+
+// gradle createJavaProject
+// gradle createWebProject
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+task createJavaProject << {
+	sourceSets*.java.srcDirs*.each { it.mkdirs() }
+	sourceSets*.resources.srcDirs*.each { it.mkdirs()}
+}
+
+task createWebProject(dependsOn: 'createJavaProject') << {
+	def webAppDir = file("$webAppDirName")
+	webAppDir.mkdirs()
+}
