@@ -46,8 +46,9 @@ check_requirements(){
     if ! test -f "${usr_share_java_root}/ecj.jar";then
 		inform "Start to download ecj.jar"
 		cd ${usr_share_java_root}
-		wget ftp://sourceware.org/pub/java/ecj-latest.jar || die
-		mv ecj-latest.jar ecj.jar || die
+		wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/ecj-4.5.jar || die
+#		wget ftp://sourceware.org/pub/java/ecj-latest.jar || die
+		cp -rf ecj-4.5.jar ecj.jar || die
     fi
 }
 
@@ -56,6 +57,7 @@ function fnct_autogen_gnu_classpath_for_android {
 	if ! test -f "stamp_autogen_gnu_classpath_for_android_h"; then
 		print_headline "Autogen gnu classpath for android"
 		./autogen.sh \
+			>${HOME}/log-fnct_autogen_gnu_classpath_for_android.log 2>&1 \
 		|| die
 		touch stamp_autogen_gnu_classpath_for_android_h
 	fi
@@ -70,9 +72,11 @@ function fnct_configure_gnu_classpath_for_android {
 			--prefix=/tmp/classpath \
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
 			--host=arm-linux-androideabi \
-			--with-sysroot=$SYSROOT \
+			--with-sysroot=${SYSROOT} \
+			--with-ecj-jar=${ECLIPSE_JAVA_COMPILER_JAR} \
 			CFLAGS="-nostdlib -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}" \
 			LDFLAGS="-nostdlib -L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS}" \
+			>${HOME}/log-fnct_configure_gnu_classpath_for_android.log 2>&1 \
 		|| die
 		touch stamp_configure_gnu_classpath_for_android_h
 	fi
@@ -83,6 +87,7 @@ function fnct_make_gnu_classpath_for_android {
 	if ! test -f "stamp_make_gnu_classpath_for_android_h"; then
 		print_headline "Make gnu classpath for android"
 		make \
+			>${HOME}/log-fnct_make_gnu_classpath_for_android.log 2>&1 \
 		|| die
 		touch stamp_make_gnu_classpath_for_android_h
 	fi
@@ -92,9 +97,9 @@ function fnct_build_gnu_classpath_for_android {
     cd $PRIVATE_BUILD_WORK_DIRECTORY || die
     if ! test -f "stamp_build_gnu_classpath_for_android$suffix_skip_checking_stamp_h"; then
         print_headline "Building gnu classpath for android"
-            fnct_autogen_gnu_classpath_for_android
+#            fnct_autogen_gnu_classpath_for_android
             fnct_configure_gnu_classpath_for_android
-#            fnct_make_gnu_classpath_for_android
+            fnct_make_gnu_classpath_for_android
         print_done
     fi
 }

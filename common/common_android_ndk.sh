@@ -57,6 +57,7 @@ function export_android_ndk_envirment {
 												-lc"
 	export NDK_EXTRA_LIBS=
 	export SYSROOT=${NDK_PLATFORM_ROOT}
+	export ECLIPSE_JAVA_COMPILER_JAR="/usr/share/java/ecj.jar"
 #	export CFLAGS="--sysroot=${SYSROOT} -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}"
 #	export CC="${NDK_TOOLCHAINS_ROOT}/bin/arm-linux-androideabi-gcc --sysroot=${SYSROOT}"
 #	export LDFLAGS="-L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS} -nostdlib"
