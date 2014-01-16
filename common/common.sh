@@ -130,7 +130,7 @@ check_env(){
 		;;
 	cygwin* | CYGWIN* )
 #		inform "will call cygwin cygpath"
-		export CYGPATH='cygpath -u'
+		export CYGPATH='cygpath'
 		;;
 	mingw* | MINGW*|*_NT-* )
 #		inform "will call my mingw cygpath"

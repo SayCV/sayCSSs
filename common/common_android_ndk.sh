@@ -29,17 +29,20 @@ common_android_ndk_script_path=`dirname "$0"`
 function export_android_ndk_envirment {
 	print_headline "Export Android NDK Envirment"
 	
-	echo $NDKROOT
+	echo ${NDKROOT}
 	export NDK_ROOT=$($CYGPATH $NDKROOT)
-	echo $NDK_ROOT
-	export NDK_TOOLCHAINS_ROOT="$NDK_ROOT/toolchains/arm-linux-androideabi-4.8/prebuilt/windows"
+#	export NDK_ROOT=$NDKROOT
+	echo ${NDK_ROOT}
+	export NDK_TOOLCHAINS_ROOT="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows"
 	export NDK_TOOLCHAINS_PREFIX="$NDK_TOOLCHAINS_ROOT/bin/arm-linux-androideabi"
-	export NDK_TOOLCHAINS_INCLUDE="$NDK_TOOLCHAINS_ROOT/lib/gcc/arm-linux-androideabi/4.8/include-fixed"
+	export NDK_TOOLCHAINS_INCLUDE="$($CYGPATH -w $NDK_TOOLCHAINS_ROOT/lib/gcc/arm-linux-androideabi/4.8/include-fixed)"
 	export PATH=$NDK_TOOLCHAINS_ROOT/bin:$PATH
 	
+	export ANDROID_STANDALONE_TOOLCHAIN=${NDK_TOOLCHAINS_ROOT}
+	
 	export NDK_PLATFORM_ROOT=$NDK_ROOT/platforms/android-18/arch-arm
-	export NDK_PLATFORM_INCLUDE=$NDK_PLATFORM_ROOT/usr/include
-	export NDK_PLATFORM_LIB=$NDK_PLATFORM_ROOT/usr/lib
+	export NDK_PLATFORM_INCLUDE=$($CYGPATH -w $NDK_PLATFORM_ROOT/usr/include)
+	export NDK_PLATFORM_LIB=$($CYGPATH -w $NDK_PLATFORM_ROOT/usr/lib)
 	
 	
 	export NDK_EXTRA_OBJS="$NDK_PLATFORM_LIB/crtbegin_dynamic.o $NDK_PLATFORM_LIB/crtend_android.o"
@@ -53,10 +56,10 @@ function export_android_ndk_envirment {
 												-lgcc \
 												-lc"
 	export NDK_EXTRA_LIBS=
-	export SYSROOT=$NDK_PLATFORM_ROOT
-#	export CFLAGS="--sysroot=$SYSROOT -I$NDK_TOOLCHAINS_INCLUDE -I$NDK_PLATFORM_INCLUDE"
-#	export CC="$NDK_TOOLCHAINS_ROOT/bin/arm-linux-androideabi-gcc --sysroot=$SYSROOT"
-#	export LDFLAGS="-L$NDK_PLATFORM_LIB $NDK_EXTRA_LIBS -nostdlib"
+	export SYSROOT=${NDK_PLATFORM_ROOT}
+#	export CFLAGS="--sysroot=${SYSROOT} -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}"
+#	export CC="${NDK_TOOLCHAINS_ROOT}/bin/arm-linux-androideabi-gcc --sysroot=${SYSROOT}"
+#	export LDFLAGS="-L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS} -nostdlib"
 	
 	print_done
 }

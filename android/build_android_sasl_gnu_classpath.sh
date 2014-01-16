@@ -57,7 +57,8 @@ function fnct_configure_gnu_classpath_for_android {
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
 			--host=arm-linux-androideabi \
 			--with-sysroot=$SYSROOT \
-			CFLAGS="-nostdlib" \
+			CFLAGS="-nostdlib -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}" \
+			LDFLAGS="-nostdlib -L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS}" \
 		|| die
 		touch stamp_configure_gnu_classpath_for_android_h
 	fi
