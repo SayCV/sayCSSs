@@ -62,7 +62,8 @@ check_requirements(){
 			--main=org.eclipse.jdt.internal.compiler.batch.GCCMain \
 			/usr/share/java/ecj.jar \
 		|| die
-		cp -rf ecjx.exe /usr/bin/ecj.exe
+#   Now call ecj will error with no classpath specified, So ...
+#		cp -rf ecjx.exe /usr/bin/ecj.exe
 		print_done || die
 	fi
 }
@@ -112,7 +113,7 @@ function fnct_build_gnu_classpath_for_android {
     cd $PRIVATE_BUILD_WORK_DIRECTORY || die
     if ! test -f "stamp_build_gnu_classpath_for_android$suffix_skip_checking_stamp_h"; then
         print_headline "Building gnu classpath for android"
-#            fnct_autogen_gnu_classpath_for_android
+            fnct_autogen_gnu_classpath_for_android
             fnct_configure_gnu_classpath_for_android
             fnct_make_gnu_classpath_for_android
         print_done
