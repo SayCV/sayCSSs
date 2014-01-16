@@ -29,6 +29,23 @@ common_script_path=`dirname "$0"`
 common_date="$(date +"%Y-%m-%d : %H-%M-%S")"
 common_filename_date="$(date +"%Y_%m_%d_%H_%M_%S")"
 
+PWD        := $(shell pwd)
+SHELL      := bash
+
+INSTALL    := $(shell ginstall --help >/dev/null 2>&1 && echo g)install
+LIBTOOL    := $(shell glibtool --help >/dev/null 2>&1 && echo g)libtool
+LIBTOOLIZE := $(shell glibtoolize --help >/dev/null 2>&1 && echo g)libtoolize
+PATCH      := $(shell gpatch --help >/dev/null 2>&1 && echo g)patch
+SED        := $(shell gsed --help >/dev/null 2>&1 && echo g)sed
+WGET       := wget --no-check-certificate \
+                   --user-agent=$(shell wget --version | \
+                   $(SED) -n 's,GNU \(Wget\) \([0-9.]*\).*,\1/\2,p')
+
+REQUIREMENTS := autoconf automake bash bison bzip2 cmake flex \
+                gcc intltoolize $(LIBTOOL) $(LIBTOOLIZE) \
+                $(MAKE) openssl $(PATCH) $(PERL) pkg-config \
+                scons $(SED) unzip wget xz yasm
+
 # displays error message and exits
 error() {
         case $? in

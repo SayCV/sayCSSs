@@ -37,6 +37,20 @@ build_android_sasl_gnu_classpath_script_relaytive_path=`dirname "$0"`
 
 PRIVATE_BUILD_WORK_DIRECTORY=$HOME/android-sasl/classpath-0.98
 
+check_requirements(){
+
+	inform "GCJ absolutely requires ECJ for compiling Java sources. "
+	inform "You can either download the necessary jar manually, as mentioned previously, "
+	inform "or install the java-ecj package from Ports."
+	local usr_share_java_root=/usr/share/java
+    if ![ -f "${usr_share_java_root}/ecj.jar" ];then
+		inform "Start to download ecj.jar"
+		${WGET} ftp://sourceware.org/pub/java/ecj-latest.jar || die
+		cd ${usr_share_java_root}
+		mv ecj-latest.jar ecj.jar || die
+    fi
+}
+
 function fnct_autogen_gnu_classpath_for_android {
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_autogen_gnu_classpath_for_android_h"; then
@@ -102,6 +116,9 @@ function main {
 
 #Check the environment.
 check_env
+
+#Check requirements.
+#check_requirements
 
 #check whether it is ndk-build clean,and exit.
 #clean $1
