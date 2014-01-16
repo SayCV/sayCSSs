@@ -7,6 +7,16 @@
 # 2013 @ SayCV.Xiao.
 #
 
+# determine base directory; preserve where you're running from
+common_realpath=$(readlink -f "$0")
+# export basedir, so that module shell can use it. log.sh. e.g.
+# export filename, so that module shell can use it. log.sh. e.g.
+# basedir=$(dirname "$realpath")
+export common_basedir=$(dirname "$common_realpath")
+export common_filename=$(basename "$common_realpath") 
+
+export PATH=$PATH:$common_basedir
+
 if [ "$script_common" ]; then
         return
 fi
@@ -57,7 +67,7 @@ function print_done {
 	inform "======================================================================"
 }
 
-function die {
+function die() {
 	ret="$?"
 	inform "FAILED!"
 	exit "$ret"
@@ -109,12 +119,44 @@ function UNPACK_ARCHIVE() {
     $(error Unknown archive format: $(1)))))))))
 }
 
-function _common_fnct_setting_skip_checking_stamp_h {
-     if test $boolean_skip_checking_stamp_h -eq "0"; then
+check_env(){
+	print_headline "Start to check the environment..."
+	
+	HOST_OS=`uname -s`
+	inform "Detected HOST_OS=${HOST_OS}"
+	case ${HOST_OS} in
+	Linux )
+		inform "will not indeeded call cygpath"
+		;;
+	cygwin* | CYGWIN* )
+#		inform "will call cygwin cygpath"
+		export CYGPATH='cygpath -u'
+		;;
+	mingw* | MINGW*|*_NT-* )
+#		inform "will call my mingw cygpath"
+		export CYGPATH=${common_basedir}/../mingw/cygpath.sh
+		;;
+	* )
+		error "Does not support current HOST_OS: ${HOST_OS}"
+		;;
+	esac
+    
+#    NDK_BUILD=`which ndk-build`
+#    echo NDK_BUILD=${NDK_BUILD}
+#    export PATH=/cygdrive/c/cygwin/bin:`dirname ${NDK_BUILD}`
+
+     if [ "$boolean_skip_checking_stamp_h" = "0" ]; then
         export suffix_skip_checking_stamp_h="null"
      else
         export suffix_skip_checking_stamp_h=""
      fi
+     echo "suffix_skip_checking_stamp_h = $suffix_skip_checking_stamp_h"
+     print_done
+}
+
+printTime(){
+    echo "Start  at ${common_date}"
+    echo "Finish at `date +"%Y-%m-%d : %H-%M-%S"`"
 }
 
 print_headline "Checking that script is using UNIX line endings"

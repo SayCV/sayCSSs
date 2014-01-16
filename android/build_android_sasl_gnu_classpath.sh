@@ -21,6 +21,15 @@ export PATH=$PATH:$basedir
 # echo $filename
 # echo $PATH
 
+if [ "$script_build_android_sasl_gnu_classpath" ]; then
+        return
+fi
+
+export script_build_android_sasl_gnu_classpath="build_android_sasl_gnu_classpath.sh"
+
+# get dir of the script
+build_android_sasl_gnu_classpath_script_relaytive_path=`dirname "$0"`
+
 # include common script
 # source "./../common/common.sh"
 . $basedir/./../common/common.sh
@@ -75,14 +84,32 @@ function fnct_build_gnu_classpath_for_android {
     fi
 }
 
+clean(){
+    if [ "$1" = "clean" ];then
+		echo "ndk-build clean"
+		ndk-build clean
+		#echo "rm bin libs obj -rf"
+		rm bin libs obj -rf
+		exit 0
+    fi
+}
+
 function main {
 	export_android_ndk_envirment || die
 	fnct_build_gnu_classpath_for_android || die
 }
 
-_common_fnct_setting_skip_checking_stamp_h
+#Check the environment.
+check_env
+
+#check whether it is ndk-build clean,and exit.
+#clean $1
+
 main || die
 print_done || die
-inform "$common_date" || die
-print_done || die
+
+#Print the start time and finish time.
+printTime
+
+#Hold here.
 pause 'Press any key to continue...' || die
