@@ -61,6 +61,9 @@ function export_android_ndk_envirment {
 #	export CFLAGS="--sysroot=${SYSROOT} -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}"
 #	export CC="${NDK_TOOLCHAINS_ROOT}/bin/arm-linux-androideabi-gcc --sysroot=${SYSROOT}"
 #	export LDFLAGS="-L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS} -nostdlib"
+	echo "CLASSPATH=${CLASSPATH}"
+	export CLASSPATH=$($CYGPATH ${JAVA_HOME}/lib):$($CYGPATH ${JRE_HOME}/lib) || die
+	echo "CLASSPATH=${CLASSPATH}"
 	
 	print_done
 }
