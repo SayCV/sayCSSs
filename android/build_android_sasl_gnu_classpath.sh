@@ -43,13 +43,28 @@ check_requirements(){
 	inform "You can either download the necessary jar manually, as mentioned previously, "
 	inform "or install the java-ecj package from Ports."
 	local usr_share_java_root=/usr/share/java
-    if ! test -f "${usr_share_java_root}/ecj.jar";then
+	if ! test -f "${usr_share_java_root}/ecj.jar";then
 		inform "Start to download ecj.jar"
+		
 		cd ${usr_share_java_root}
 		wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/ecj-4.5.jar || die
 #		wget ftp://sourceware.org/pub/java/ecj-latest.jar || die
 		cp -rf ecj-4.5.jar ecj.jar || die
-    fi
+		
+		print_done || die
+	fi
+
+	if ! test -f "${usr_share_java_root}/ecjx.exe";then
+    inform "Start to compile ecj.jar to generate ecj.exe"
+    
+    cd ${usr_share_java_root}
+		gcj -o ecjx.exe -findirect-dispatch \
+			--main=org.eclipse.jdt.internal.compiler.batch.GCCMain \
+			/usr/share/java/ecj.jar \
+		|| die
+		cp -rf ecjx.exe /usr/bin/ecj.exe
+		print_done || die
+	fi
 }
 
 function fnct_autogen_gnu_classpath_for_android {
