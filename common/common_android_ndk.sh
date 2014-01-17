@@ -79,7 +79,7 @@ function export_android_ndk_envirment {
 # JDK7 (18): cast, classfile, deprecation, dep-ann, divzero, empty, fallthrough, finally, options,
 #                  overrides, path, processing, rawtypes, serial, static, try, unchecked, varargs	
 	export CUSTOM_JAVAC_OPTS_ENABLE_WARNINGS="-Xlint:unchecked,cast,divzero,empty,finally,overrides"
-	export CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS="-Xlint:unchecked,cast,divzero,empty,finally,overrides"
+	export CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS="-Xlint:-unchecked,-cast,-divzero,-empty,-finally,-overrides"
 	export CUSTOM_JAVA_OPTS_DISABLE_WARNINGS="-nowarn"
 	export CUSTOM_JAVA_OPTS_ENABLE_DEBUG="-g"
 	export CUSTOM_JAVA_OPTS=${CUSTOM_JAVA_OPTS_DISABLE_WARNINGS} ${CUSTOM_JAVA_OPTS_ENABLE_DEBUG} 
