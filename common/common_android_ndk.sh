@@ -32,17 +32,18 @@ function export_android_ndk_envirment {
 	echo ${NDKROOT}
 	export NDK_ROOT=$($CYGPATH $NDKROOT)
 #	export NDK_ROOT=$NDKROOT
+# $(echo $(cygpath -w $ECLIPSE_JAVA_COMPILER_JAR) | sed -e 's@\\@/@g')
 	echo ${NDK_ROOT}
 	export NDK_TOOLCHAINS_ROOT="${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8/prebuilt/windows"
 	export NDK_TOOLCHAINS_PREFIX="$NDK_TOOLCHAINS_ROOT/bin/arm-linux-androideabi"
-	export NDK_TOOLCHAINS_INCLUDE="$($CYGPATH -w $NDK_TOOLCHAINS_ROOT/lib/gcc/arm-linux-androideabi/4.8/include-fixed)"
+	export NDK_TOOLCHAINS_INCLUDE="$(echo $(cygpath -w $NDK_TOOLCHAINS_ROOT) | sed -e 's@\\@/@g')/lib/gcc/arm-linux-androideabi/4.8/include-fixed"
 	export PATH=$NDK_TOOLCHAINS_ROOT/bin:$PATH
 	
 	export ANDROID_STANDALONE_TOOLCHAIN=${NDK_TOOLCHAINS_ROOT}
 	
 	export NDK_PLATFORM_ROOT=$NDK_ROOT/platforms/android-18/arch-arm
-	export NDK_PLATFORM_INCLUDE=$($CYGPATH -w $NDK_PLATFORM_ROOT/usr/include)
-	export NDK_PLATFORM_LIB=$($CYGPATH -w $NDK_PLATFORM_ROOT/usr/lib)
+	export NDK_PLATFORM_INCLUDE=$(echo $(cygpath -w $NDK_PLATFORM_ROOT) | sed -e 's@\\@/@g')/usr/include
+	export NDK_PLATFORM_LIB=$(echo $(cygpath -w $NDK_PLATFORM_ROOT) | sed -e 's@\\@/@g')/usr/lib
 	
 	
 	export NDK_EXTRA_OBJS="$NDK_PLATFORM_LIB/crtbegin_dynamic.o $NDK_PLATFORM_LIB/crtend_android.o"
@@ -80,9 +81,13 @@ function export_android_ndk_envirment {
 #                  overrides, path, processing, rawtypes, serial, static, try, unchecked, varargs	
 	export CUSTOM_JAVAC_OPTS_ENABLE_WARNINGS="-Xlint:unchecked,cast,divzero,empty,finally,overrides"
 	export CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS="-Xlint:-unchecked,-cast,-divzero,-empty,-finally,-overrides"
+#	export CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS="-Xlint:deprecation"
 	export CUSTOM_JAVA_OPTS_DISABLE_WARNINGS="-nowarn"
+#	export CUSTOM_JAVA_OPTS_ENABLE_DEBUG="-g -verbose"
 	export CUSTOM_JAVA_OPTS_ENABLE_DEBUG="-g"
 	export CUSTOM_JAVA_OPTS="${CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS} ${CUSTOM_JAVA_OPTS_DISABLE_WARNINGS} ${CUSTOM_JAVA_OPTS_ENABLE_DEBUG}"
+	
+#	export JAVAC="gcj -C"
 	
 	print_done
 }
