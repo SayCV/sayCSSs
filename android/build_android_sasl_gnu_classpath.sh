@@ -95,7 +95,6 @@ function fnct_configure_gnu_classpath_for_android {
 			--host=arm-linux-androideabi \
 			--with-sysroot=${SYSROOT} \
 			--with-ecj-jar=${ECLIPSE_JAVA_COMPILER_JAR} \
-			--with-javac="java -jar ecj-4.2.jar" \
 			CFLAGS="-nostdlib -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}" \
 			LDFLAGS="-nostdlib -L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS}" \
 			>${HOME}/log-fnct_configure_gnu_classpath_for_android.log 2>&1 \
