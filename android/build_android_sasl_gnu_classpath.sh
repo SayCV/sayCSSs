@@ -47,9 +47,14 @@ check_requirements(){
 		inform "Start to download ecj.jar"
 		
 		cd ${usr_share_java_root}
-		wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/ecj-4.5.jar || die
+#		wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/ecj-4.5.jar || die
 #		wget ftp://sourceware.org/pub/java/ecj-latest.jar || die
-		cp -rf ecj-4.5.jar ecj.jar || die
+		wget \
+			http://download.eclipse.org/eclipse/updates/\
+			4.4milestones/S-4.4M4-201312121600/plugins/\
+			org.eclipse.jdt.core_3.10.0.v20131208-1955.jar \
+		|| die
+		cp -rf org.eclipse.jdt.core_3.10.0.v20131208-1955.jar ecj.jar || die
 		
 		print_done || die
 	fi
@@ -90,6 +95,7 @@ function fnct_configure_gnu_classpath_for_android {
 			--host=arm-linux-androideabi \
 			--with-sysroot=${SYSROOT} \
 			--with-ecj-jar=${ECLIPSE_JAVA_COMPILER_JAR} \
+			--with-javac="java -jar ecj-4.2.jar" \
 			CFLAGS="-nostdlib -I${NDK_TOOLCHAINS_INCLUDE} -I${NDK_PLATFORM_INCLUDE}" \
 			LDFLAGS="-nostdlib -L${NDK_PLATFORM_LIB} ${NDK_EXTRA_LIBS}" \
 			>${HOME}/log-fnct_configure_gnu_classpath_for_android.log 2>&1 \
