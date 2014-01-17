@@ -49,10 +49,7 @@ check_requirements(){
 		cd ${usr_share_java_root}
 #		wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/ecj-4.5.jar || die
 #		wget ftp://sourceware.org/pub/java/ecj-latest.jar || die
-		wget \
-			http://download.eclipse.org/eclipse/updates/\
-			4.4milestones/S-4.4M4-201312121600/plugins/\
-			org.eclipse.jdt.core_3.10.0.v20131208-1955.jar \
+		wget http://download.eclipse.org/eclipse/updates/4.4milestones/S-4.4M4-201312121600/plugins/org.eclipse.jdt.core_3.10.0.v20131208-1955.jar \
 		|| die
 		cp -rf org.eclipse.jdt.core_3.10.0.v20131208-1955.jar ecj.jar || die
 		
