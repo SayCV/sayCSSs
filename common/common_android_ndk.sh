@@ -64,6 +64,24 @@ function export_android_ndk_envirment {
 	echo "CLASSPATH=${CLASSPATH}"
 	export CLASSPATH=$($CYGPATH ${JAVA_HOME}/lib):$($CYGPATH ${JRE_HOME}/lib) || die
 	echo "CLASSPATH=${CLASSPATH}"
+
+	echo Enable or disable specific warnings
+	echo -Xlint:{all,cast,deprecation,dep-ann,divzero,empty,fallthrough,finally,overrides,\
+		path,processing,serial,unchecked,rawtypes,static,varargs,try,-cast,-deprecation,\
+		-dep-ann,-divzero,-empty,-fallthrough,-finally,-overrides,-path,-processing,-serial,\
+		-unchecked,-rawtypes,-static,-varargs,-try,none}
+		
+# Plan for enabling Xlint java compiler warnings in the next several beta/stable series:
+#   3.3.x/3.4: cast, divzero, finally, path, overrides
+#   3.5.x/3.6: fallthrough, serial, static, rawtypes, unchecked
+#   3.7.x/3.8: -Xlint (Enable all recommended warnings)
+# JDK6 (10): cast, deprecation, divzero, empty, fallthrough, finally, overrides, path, serial, unchecked
+# JDK7 (18): cast, classfile, deprecation, dep-ann, divzero, empty, fallthrough, finally, options,
+#                  overrides, path, processing, rawtypes, serial, static, try, unchecked, varargs	
+	export CUSTOM_JAVAC_OPTS_ENABLE_WARNINGS="-Xlint:unchecked,cast,divzero,empty,finally,overrides"
+	export CUSTOM_JAVAC_OPTS_DISABLE_WARNINGS="-Xlint:unchecked,cast,divzero,empty,finally,overrides"
+	export CUSTOM_JAVA_OPTS_DISABLE_WARNINGS="-nowarn"
+	export CUSTOM_JAVA_OPTS_ENABLE_DEBUG="-g"
 	
 	print_done
 }
