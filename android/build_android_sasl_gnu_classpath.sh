@@ -101,6 +101,24 @@ function fnct_configure_gnu_classpath_for_android {
 	fi
 }
 
+function fnct_hacking_before_make_gnu_classpath_for_android {
+	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+	if ! test -f "stamp_hacking_before_make_gnu_classpath_for_android_h"; then
+		print_headline "Hacking before make gnu classpath for android"
+		
+		print_headline "Fixed jni_md.h symlink not work on cygwin instead of copy original file and rename to jni_md.h"
+		cd $PRIVATE_BUILD_WORK_DIRECTORY/include || die
+		cp -rf jni_md-x86-linux-gnu.h jni_md.h || die
+#sed -i '/<localRepository>/{/<\/localRepository>/s/.*/  <localRepository>D:\/Android\/maven\/repo<\/localRepository>/g}' $M2_HOME/conf/settings.xml	
+		print_headline 'Removing include ./$(DEPDIR)/***.Plo of repeat'
+			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+			find . -path "./doc" -prune -o -name "Makefile" |
+				xargs perl -pi -e 's|include .*.Plo| |g'
+			
+		touch stamp_hacking_before_make_gnu_classpath_for_android_h
+	fi
+}
+
 function fnct_make_gnu_classpath_for_android {
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_make_gnu_classpath_for_android_h"; then
@@ -118,6 +136,7 @@ function fnct_build_gnu_classpath_for_android {
         print_headline "Building gnu classpath for android"
             fnct_autogen_gnu_classpath_for_android
             fnct_configure_gnu_classpath_for_android
+            fnct_hacking_before_make_gnu_classpath_for_android
             fnct_make_gnu_classpath_for_android
         print_done
     fi
