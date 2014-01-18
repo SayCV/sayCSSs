@@ -89,6 +89,7 @@ function fnct_configure_gnu_classpath_for_android {
 		./configure \
 			--prefix=/tmp/classpath \
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
+			--disable-Werror \
 			--host=arm-linux-androideabi \
 			--with-sysroot=${SYSROOT} \
 			--with-ecj-jar=${ECLIPSE_JAVA_COMPILER_JAR} \
