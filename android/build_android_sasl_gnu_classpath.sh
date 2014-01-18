@@ -101,6 +101,17 @@ function fnct_configure_gnu_classpath_for_android {
 	fi
 }
 
+function fnct_hacking_copy_android_platforms_libso_files {
+	cd $1
+	if ! test -f "crtbegin_so.o"; then
+#		cd ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-io
+#		ln -s ${NDK_PLATFORM_LIB}/crtbegin_so.o 
+#		ln -s ${NDK_PLATFORM_LIB}/crtend_so.o 
+		cp -rf ${NDK_PLATFORM_LIB}/crtbegin_so.o crtbegin_so.o
+		cp -rf ${NDK_PLATFORM_LIB}/crtend_so.o crtend_so.o
+	fi
+}
+
 function fnct_hacking_before_make_gnu_classpath_for_android {
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_hacking_before_make_gnu_classpath_for_android_h"; then
@@ -111,11 +122,15 @@ function fnct_hacking_before_make_gnu_classpath_for_android {
 		cp -rf jni_md-x86-linux-gnu.h jni_md.h || die
 #sed -i '/<localRepository>/{/<\/localRepository>/s/.*/  <localRepository>D:\/Android\/maven\/repo<\/localRepository>/g}' $M2_HOME/conf/settings.xml	
 		print_headline 'Removing include ./$(DEPDIR)/***.Plo of repeat'
-			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
-			find . -path "./doc" -prune -o -name "Makefile" |
-				xargs perl -pi -e 's|include .*.Plo| |g'
-			
-		touch stamp_hacking_before_make_gnu_classpath_for_android_h
+#			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+#			find . -path "./doc" -prune -o -name "Makefile" |
+#				xargs perl -pi -e 's|include .*.Plo| |g'
+		
+		print_headline "we add a sym link to crtbegin_so.o, crtend_so.o in the source folder"
+		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-io
+		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-lang
+
+#		touch stamp_hacking_before_make_gnu_classpath_for_android_h
 	fi
 }
 
