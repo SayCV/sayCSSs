@@ -141,7 +141,7 @@ function fnct_hacking_before_make_gnu_classpath_for_android {
 			find . -maxdepth 1 -name "Makefile" |
 				xargs perl -pi -e 's|DIST_SUBDIRS = lib doc external include native resource scripts tools examples|DIST_SUBDIRS = lib doc external include native resource scripts|g'
 
-#		touch stamp_hacking_before_make_gnu_classpath_for_android_h
+		touch stamp_hacking_before_make_gnu_classpath_for_android_h
 	fi
 }
 
@@ -156,6 +156,17 @@ function fnct_make_gnu_classpath_for_android {
 	fi
 }
 
+function fnct_make_install_gnu_classpath_for_android {
+	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+	if ! test -f "stamp_make_install_gnu_classpath_for_android_h"; then
+		print_headline "Make install gnu classpath for android"
+		make install \
+			>${HOME}/log-fnct_make_install_gnu_classpath_for_android.log 2>&1 \
+		|| die
+		touch stamp_make_install_gnu_classpath_for_android_h
+	fi
+}
+
 function fnct_build_gnu_classpath_for_android {
     cd $PRIVATE_BUILD_WORK_DIRECTORY || die
     if ! test -f "stamp_build_gnu_classpath_for_android$suffix_skip_checking_stamp_h"; then
@@ -164,6 +175,7 @@ function fnct_build_gnu_classpath_for_android {
             fnct_configure_gnu_classpath_for_android
             fnct_hacking_before_make_gnu_classpath_for_android
             fnct_make_gnu_classpath_for_android
+            fnct_make_install_gnu_classpath_for_android
         print_done
     fi
 }
