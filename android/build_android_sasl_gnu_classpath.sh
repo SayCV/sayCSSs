@@ -129,6 +129,17 @@ function fnct_hacking_before_make_gnu_classpath_for_android {
 		print_headline "we add a sym link to crtbegin_so.o, crtend_so.o in the source folder"
 		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-io
 		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-lang
+		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-net
+		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-nio 
+		fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/native/jni/java-util
+		
+		print_headline "Skip to building tools directory."
+		print_headline 'Removing  $(TOOLSDIR) $(EXAMPLESDIR) at SUBDIRS in Makefile'
+			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+			find . -maxdepth 1 -name "Makefile" |
+				xargs perl -pi -e 's|SUBDIRS = lib doc external include native resource scripts $(TOOLSDIR) $(EXAMPLESDIR)|SUBDIRS = lib doc external include native resource scripts|g'
+			find . -maxdepth 1 -name "Makefile" |
+				xargs perl -pi -e 's|DIST_SUBDIRS = lib doc external include native resource scripts tools examples|DIST_SUBDIRS = lib doc external include native resource scripts|g'
 
 #		touch stamp_hacking_before_make_gnu_classpath_for_android_h
 	fi
