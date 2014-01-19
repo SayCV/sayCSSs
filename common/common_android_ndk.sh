@@ -107,7 +107,7 @@ function fnct_hacking_before_building_for_android() {
 	prj_stamp_suffix="${prj_basename}_for_android_h"
 
 	cd ${prj_path} || die
-	if ! test -f "stamp_hacking_before_hacking_before_building_${prj_stamp_suffix}"; then
+	if ! test -f "stamp_hacking_before_building_${prj_stamp_suffix}"; then
 		print_headline "Hacking before building ${prj_basename} for android"
 		
 		print_headline "Updating config.guess and config.sub to the latest version"
@@ -116,7 +116,7 @@ function fnct_hacking_before_building_for_android() {
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.guess config.guess || die
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.sub config.sub || die
 		
-		touch stamp_hacking_before_hacking_before_building_${prj_stamp_suffix}
+		touch stamp_hacking_before_building_${prj_stamp_suffix}
 		
 		print_done
 	fi
@@ -127,7 +127,7 @@ function fnct_hacking_before_makeing_for_android() {
 	local prj_basename
 	local prj_stamp_suffix
 	if [ "" = "$1" ]; then
-		error "fnct_hacking_before_building_for_android accepted error args!"
+		error "fnct_hacking_before_makeing_for_android accepted error args!"
 	fi
 #	prj_path=$(dirname "$1")
 	prj_path="$1"
@@ -135,8 +135,8 @@ function fnct_hacking_before_makeing_for_android() {
 	prj_stamp_suffix="${prj_basename}_for_android_h"
 
 	cd ${prj_path} || die
-	if ! test -f "stamp_hacking_before_building_${prj_stamp_suffix}"; then
-		print_headline "Hacking before building ${prj_basename} for android"
+	if ! test -f "stamp_hacking_before_makeing_${prj_stamp_suffix}"; then
+		print_headline "Hacking before makeing ${prj_basename} for android"
 		
 		print_headline Removing 'include ./$(DEPDIR)/***.Plo' of repeat at ${prj_basename}
 		
@@ -145,7 +145,37 @@ function fnct_hacking_before_makeing_for_android() {
 			find . -name "Makefile" |
 				xargs perl -pi -e 's|include .*.Plo||g'
 		
-#		touch stamp_hacking_before_hacking_before_building_${prj_stamp_suffix}
+#		touch stamp_hacking_before_makeing_${prj_stamp_suffix}
+		
+		print_done
+	fi
+}
+
+function fnct_hacking_before_makeing_install_for_android() {
+	local prj_path
+	local prj_basename
+	local prj_stamp_suffix
+	if [ "" = "$1" ]; then
+		error "fnct_hacking_before_makeing_install_for_android accepted error args!"
+	fi
+#	prj_path=$(dirname "$1")
+	prj_path="$1"
+	prj_basename=$(basename "${prj_path}")_$(basename "$1") #dir_Makefile
+	prj_stamp_suffix="${prj_basename}_for_android_h"
+
+	cd ${prj_path} || die
+	if ! test -f "stamp_hacking_before_makeing_install_${prj_stamp_suffix}"; then
+		print_headline "Hacking before makeing install ${prj_basename} for android"
+		
+		print_headline "Hacking abs path to windows style when call arm-linux-androideabi-ranlib.exe"
+
+# old_postinstall_cmds="chmod 644 \$oldlib~\$RANLIB \$(echo \$(cygpath -w \$oldlib) | sed -e 's@\\@/@g')"
+		cd ${prj_path} || die
+#			find . -path "./doc" -prune -o -name "Makefile" |
+			find . -name "libtool" |
+				xargs perl -pi -e 's|old_postinstall_cmds=\*|old_postinstall_cmds=\"chmod 644 \$oldlib~\$RANLIB \$(echo \$(cygpath -w \$oldlib) \| sed -e 's\\@\\\\\\\\@/\\@g')\"|g'
+		
+#		touch stamp_hacking_before_makeing_install_${prj_stamp_suffix}
 		
 		print_done
 	fi

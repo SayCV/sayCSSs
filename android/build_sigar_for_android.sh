@@ -178,7 +178,8 @@ function fnct_build_sigar_for_android {
 #            fnct_hacking_before_make_sigar_for_android
 						fnct_hacking_copy_android_platforms_libso_files ${PRIVATE_BUILD_WORK_DIRECTORY}/src
             fnct_make_sigar_for_android
-#            fnct_make_install_sigar_for_android
+            fnct_hacking_before_makeing_install_for_android $PRIVATE_BUILD_WORK_DIRECTORY
+            fnct_make_install_sigar_for_android
         print_done
     fi
 }
