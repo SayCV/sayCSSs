@@ -116,6 +116,8 @@ function fnct_hacking_before_building_for_android() {
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.guess config.guess || die
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.sub config.sub || die
 		
+		touch stamp_hacking_before_hacking_before_building_${prj_stamp_suffix}
+		
 		print_done
 	fi
 }
