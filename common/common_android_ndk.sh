@@ -116,7 +116,7 @@ function fnct_hacking_before_building_for_android() {
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.guess config.guess || die
 		cp -rf ${common_android_ndk_basedir}/../../Config/config.sub config.sub || die
 		
-		touch stamp_hacking_before_building_${prj_stamp_suffix}
+#		touch stamp_hacking_before_building_${prj_stamp_suffix}
 		
 		print_done
 	fi
@@ -138,12 +138,14 @@ function fnct_hacking_before_makeing_for_android() {
 	if ! test -f "stamp_hacking_before_makeing_${prj_stamp_suffix}"; then
 		print_headline "Hacking before makeing ${prj_basename} for android"
 		
-		print_headline Removing 'include ./$(DEPDIR)/***.Plo' of repeat at ${prj_basename}
+		print_headline "Removing 'include ./$(DEPDIR)/***.Plo' of repeat at ${prj_basename}"
 		
 		cd ${prj_path} || die
 #			find . -path "./doc" -prune -o -name "Makefile" |
 			find . -name "Makefile" |
 				xargs perl -pi -e 's|include .*.Plo||g'
+			find . -name "Makefile" |
+				xargs perl -pi -e 's|include .*.Po||g'
 		
 #		touch stamp_hacking_before_makeing_${prj_stamp_suffix}
 		

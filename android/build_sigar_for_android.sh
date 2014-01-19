@@ -167,6 +167,20 @@ function fnct_make_install_sigar_for_android {
 	fi
 }
 
+function fnct_hacking_after_make_install_sigar_for_android {
+	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+	if ! test -f "stamp_hacking_after_make_install_sigar_for_android_h"; then
+		print_headline "Hacking after make install sigar for android"
+		cd /tmp/sigar
+		mkdir -p libTogether
+		cd libTogether
+		ar x ../libsigar.a
+		
+		cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+		touch stamp_hacking_after_make_install_sigar_for_android_h
+	fi
+}
+
 function fnct_build_sigar_for_android {
     cd $PRIVATE_BUILD_WORK_DIRECTORY || die
     if ! test -f "stamp_build_sigar_for_android$suffix_skip_checking_stamp_h"; then
@@ -215,4 +229,6 @@ print_done || die
 printTime
 
 #Hold here.
+if [ "" = "$1" ]; then
 pause 'Press any key to continue...' || die
+fi
