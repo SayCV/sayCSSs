@@ -91,3 +91,28 @@ function export_android_ndk_envirment {
 	
 	print_done
 }
+
+function fnct_hacking_before_building_for_android() {
+	local prj_path
+	local prj_basename
+	local prj_stamp_suffix
+	if [ "" = "$1" ]; then
+		error "fnct_hacking_before_building_for_android accepted error args!"
+	fi
+	prj_path="$1"
+	prj_basename=$(basename "$1")
+	prj_stamp_suffix="${prj_basename}_for_android_h"
+
+	cd ${prj_path} || die
+	if ! test -f "stamp_hacking_before_hacking_before_building_${prj_stamp_suffix}"; then
+		print_headline "Hacking before building ${prj_basename} for android"
+		
+		print_headline "Updating config.guess and config.sub to the latest version"
+		
+		cd ${prj_path} || die
+		cp -rf ${common_android_ndk_basedir}/../../Config/config.guess config.guess || die
+		cp -rf ${common_android_ndk_basedir}/../../Config/config.sub config.sub || die
+		
+		print_done
+	fi
+}
