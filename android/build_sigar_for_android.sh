@@ -90,6 +90,8 @@ function fnct_configure_sigar_for_android {
 			--prefix=/tmp/sigar \
 			--disable-gtk-peer --disable-gconf-peer --disable-plugin \
 			--disable-Werror \
+			--enable-static=yes \
+			--enable-shared=no \
 			--host=arm-linux-androideabi \
 			--with-sysroot=${SYSROOT} \
 			--with-ecj-jar=${ECLIPSE_JAVA_COMPILER_JAR} \
