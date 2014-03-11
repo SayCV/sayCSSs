@@ -35,8 +35,14 @@ build_uboot_for_brd_sitara_script_relaytive_path=`dirname "$0"`
 . $basedir/./../common/common.sh
 . $basedir/./../common/common_rtems_ndk.sh
 
-PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
-UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}-
+export PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
+export UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}-
+
+#Check the environment.
+check_env
+
+#Export variable required.
+export_rtems_ndk_envirment || die
 
 . $basedir/./build_uboot_common.sh
 
@@ -46,14 +52,8 @@ function main {
 	fnct_build_uboot_common sitara am335x_evm_config
 }
 
-#Check the environment.
-check_env
-
 #Check requirements.
 check_requirements
-
-#Export variable required.
-export_rtems_ndk_envirment || die
 
 #Main functions call.
 # clean || die

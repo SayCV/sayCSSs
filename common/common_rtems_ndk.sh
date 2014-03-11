@@ -31,7 +31,8 @@ function export_rtems_ndk_envirment {
 	
 	RTEMS_NDKROOT=/opt/rtems-4.11-tools
 	echo ${RTEMS_NDKROOT}
-	export NDK_ROOT=$($CYGPATH $RTEMS_NDKROOT)
+	export NDK_ROOT=$RTEMS_NDKROOT
+	echo ${NDK_ROOT}
 
 	export NDK_TOOLCHAINS_ROOT="${NDK_ROOT}"
 	export NDK_TOOLCHAINS_PREFIX="$NDK_TOOLCHAINS_ROOT/bin/arm-rtemseabi4.11"
