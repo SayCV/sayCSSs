@@ -35,14 +35,15 @@ build_uboot_for_brd_sitara_script_relaytive_path=`dirname "$0"`
 . $basedir/./../common/common.sh
 . $basedir/./../common/common_rtems_ndk.sh
 
-export PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
-export UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}-
-
 #Check the environment.
 check_env
 
 #Export variable required.
 export_rtems_ndk_envirment || die
+
+#Export variable local.
+export PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
+export UBOOT_CC=$NDK_TOOLCHAINS_PREFIX-
 
 . $basedir/./build_uboot_common.sh
 

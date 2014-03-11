@@ -37,6 +37,8 @@ build_uboot_common_script_relaytive_path=`dirname "$0"`
 
 # PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
 # UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}-
+echo ${PRIVATE_BUILD_WORK_DIRECTORY}
+echo ${UBOOT_CC}
 
 check_requirements(){
 	print_headline "Checking requirements for ${1}"
