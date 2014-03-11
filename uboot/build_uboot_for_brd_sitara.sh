@@ -33,7 +33,7 @@ build_uboot_for_brd_sitara_script_relaytive_path=`dirname "$0"`
 # include common script
 # source "./../common/common.sh"
 . $basedir/./../common/common.sh
-. $basedir/./../common/common_android_ndk.sh
+. $basedir/./../common/common_rtems_ndk.sh
 
 PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sigar
 
