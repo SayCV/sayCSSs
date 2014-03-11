@@ -55,7 +55,8 @@ check_requirements
 #Export variable required.
 export_rtems_ndk_envirment || die
 
-clean || die
+#Main functions call.
+# clean || die
 main || die
 print_done || die
 

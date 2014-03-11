@@ -29,7 +29,7 @@ common_rtems_ndk_script_path=`dirname "$0"`
 function export_rtems_ndk_envirment {
 	print_headline "Export RTEMS NDK Envirment"
 	
-	RTEMS_NDKROOT=D:\cygwin\opt\rtems-4.11-tools
+	RTEMS_NDKROOT=/opt/rtems-4.11-tools
 	echo ${RTEMS_NDKROOT}
 	export NDK_ROOT=$($CYGPATH $RTEMS_NDKROOT)
 
