@@ -36,7 +36,7 @@ build_uboot_common_script_relaytive_path=`dirname "$0"`
 . $basedir/./../common/common_rtems_ndk.sh
 
 # PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-uboot
-# UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}
+# UBOOT_CC=${NDK_TOOLCHAINS_PREFIX}-
 
 check_requirements(){
 	print_headline "Checking requirements for ${1}"
@@ -96,7 +96,13 @@ function fnct_hacking_after_make_install_uboot_for_target_brd {
 }
 
 clean(){
-    make ARCH=arm CROSS_COMPILE=${UBOOT_CC} distclean || die
+	print_headline "Cleaning uboot"
+	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+	if ! test -f "stamp_clean_uboot_common_h"; then
+		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} distclean || die
+		touch stamp_clean_uboot_common_h
+	fi
+	print_done
 }
 
 function fnct_build_uboot_common {
@@ -105,9 +111,9 @@ function fnct_build_uboot_common {
         print_headline "Building uboot for ${1}"
             fnct_autogen_uboot_for_target_brd ${1} ${2}
             fnct_configure_uboot_for_target_brd ${1} ${2}
-            fnct_hacking_before_make_for_target_brd ${1} ${2}
+            fnct_hacking_before_make_uboot_for_target_brd ${1} ${2}
             fnct_make_uboot_for_target_brd ${1} ${2}
-            fnct_hacking_before_make_install_for_target_brd ${1} ${2}
+            # fnct_hacking_before_make_install_uboot_for_target_brd ${1} ${2}
             fnct_make_install_uboot_for_target_brd ${1} ${2}
             fnct_hacking_after_make_install_uboot_for_target_brd ${1} ${2}
         print_done
