@@ -59,6 +59,9 @@ function fnct_configure_uboot_for_target_brd {
 		# make ARCH=arm CROSS_COMPILE=${CC} am335x_evm_config
 		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} ${2} || die
 		touch stamp_configure_uboot_for_${1}_h
+		inform "Done it."
+	else
+		inform "Nothing to do."
 	fi
 	print_done
 }
@@ -76,6 +79,9 @@ function fnct_make_uboot_for_target_brd {
 	if ! test -f "stamp_make_uboot_for_${1}_h"; then
 		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} || die
 		touch stamp_make_uboot_for_${1}_h
+		inform "Done it."
+	else
+		inform "Nothing to do."
 	fi
 }
 
@@ -83,8 +89,10 @@ function fnct_make_install_uboot_for_target_brd {
 	print_headline "Making install uboot for ${1}"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_make_install_uboot_for_${1}_h"; then
-		inform "Nothing to do."
 		touch stamp_make_install_uboot_for_${1}_h
+		inform "Done it."
+	else
+		inform "Nothing to do."
 	fi
 }
 
@@ -94,7 +102,11 @@ function fnct_hacking_after_make_install_uboot_for_target_brd {
 	if ! test -f "stamp_hacking_after_make_install_uboot_for_${1}_h"; then
 		inform "Nothing to do."
 		touch stamp_hacking_after_make_install_uboot_for_${1}_h
+		inform "Done it."
+	else
+		inform "Nothing to do."
 	fi
+	print_done
 }
 
 clean(){
@@ -103,21 +115,26 @@ clean(){
 	if ! test -f "stamp_clean_uboot_common_h"; then
 		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} distclean || die
 		touch stamp_clean_uboot_common_h
+		inform "Done it."
+	else
+		inform "Nothing to do."
 	fi
 	print_done
 }
 
 function fnct_build_uboot_common {
-    cd $PRIVATE_BUILD_WORK_DIRECTORY || die
-    if ! test -f "stamp_build_uboot_common$suffix_skip_checking_stamp_h"; then
-        print_headline "Building uboot for ${1}"
-            fnct_autogen_uboot_for_target_brd ${1} ${2}
-            fnct_configure_uboot_for_target_brd ${1} ${2}
-            fnct_hacking_before_make_uboot_for_target_brd ${1} ${2}
-            fnct_make_uboot_for_target_brd ${1} ${2}
-            # fnct_hacking_before_make_install_uboot_for_target_brd ${1} ${2}
-            fnct_make_install_uboot_for_target_brd ${1} ${2}
-            fnct_hacking_after_make_install_uboot_for_target_brd ${1} ${2}
-        print_done
-    fi
+	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+	if ! test -f "stamp_build_uboot_common$suffix_skip_checking_stamp_h"; then
+		print_headline "Building uboot for ${1}"
+			fnct_autogen_uboot_for_target_brd ${1} ${2}
+			fnct_configure_uboot_for_target_brd ${1} ${2}
+			fnct_hacking_before_make_uboot_for_target_brd ${1} ${2}
+			fnct_make_uboot_for_target_brd ${1} ${2}
+			# fnct_hacking_before_make_install_uboot_for_target_brd ${1} ${2}
+			fnct_make_install_uboot_for_target_brd ${1} ${2}
+			fnct_hacking_after_make_install_uboot_for_target_brd ${1} ${2}
+		print_done
+	else
+		inform "Nothing to do."
+	fi
 }
