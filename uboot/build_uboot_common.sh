@@ -77,7 +77,7 @@ function fnct_make_uboot_for_target_brd {
 	print_headline "Making uboot for ${1}"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_make_uboot_for_${1}_h"; then
-		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} || die
+		make ARCH=arm CROSS_COMPILE=${UBOOT_CC} >log-Making_uboot_for_${1}.log 2>&1 || die
 		touch stamp_make_uboot_for_${1}_h
 		inform "Done it."
 	else
