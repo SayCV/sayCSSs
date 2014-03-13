@@ -1,0 +1,29 @@
+From 4b302fff668b3226cecb984c3f8fb8258d306e88 Mon Sep 17 00:00:00 2001
+From: SayCV <sssxyc@163.com>
+Date: Thu, 13 Mar 2014 14:19:52 +0800
+Subject: [PATCH 2/2] Cygwin GCC do not support inline function
+
+---
+ include/compiler.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/include/compiler.h b/include/compiler.h
+index 0734ed4..efe99b4 100644
+--- a/include/compiler.h
++++ b/include/compiler.h
+@@ -9,6 +9,12 @@
+ 
+ #ifdef USE_HOSTCC
+ 
++#if defined(__CYGWIN__)
++#include <endian.h>
++#define inline
++typedef unsigned long ulong;
++#endif
++
+ #if defined(__BEOS__)	 || \
+     defined(__NetBSD__)  || \
+     defined(__FreeBSD__) || \
+-- 
+1.9.0.msysgit.0
+

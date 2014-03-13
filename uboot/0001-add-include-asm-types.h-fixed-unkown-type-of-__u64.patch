@@ -1,0 +1,24 @@
+From 17c2e495f2d73de1b4fa57e4a5a208371a1c1152 Mon Sep 17 00:00:00 2001
+From: SayCV <sssxyc@163.com>
+Date: Wed, 12 Mar 2014 22:14:34 +0800
+Subject: [PATCH 1/2] add #include "asm/types.h", fixed unkown type of __u64
+
+---
+ include/libfdt_env.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/libfdt_env.h b/include/libfdt_env.h
+index 273b5d3..7334742 100644
+--- a/include/libfdt_env.h
++++ b/include/libfdt_env.h
+@@ -10,6 +10,7 @@
+ #define _LIBFDT_ENV_H
+ 
+ #include "compiler.h"
++#include "asm/types.h"
+ #include "linux/types.h"
+ 
+ extern struct fdt_header *working_fdt;  /* Pointer to the working fdt */
+-- 
+1.9.0.msysgit.0
+
