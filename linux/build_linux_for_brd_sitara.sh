@@ -50,7 +50,7 @@ export RTEMS_CC=$NDK_TOOLCHAINS_PREFIX-
 
 
 function main {
-	fnct_build_linux_common sitara am335x_evm_config
+	fnct_build_linux_common sitara omap2plus_defconfig
 }
 
 #Check requirements.
