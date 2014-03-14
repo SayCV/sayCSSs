@@ -36,9 +36,9 @@ build_linux_common_script_relaytive_path=`dirname "$0"`
 . $basedir/./../common/common_rtems_ndk.sh
 
 # PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-linux
-# linux_CC=${NDK_TOOLCHAINS_PREFIX}-
+# RTEMS_CC=${NDK_TOOLCHAINS_PREFIX}-
 echo ${PRIVATE_BUILD_WORK_DIRECTORY}
-echo ${linux_CC}
+echo ${RTEMS_CC}
 
 check_requirements(){
 	print_headline "Checking requirements for ${1}"
@@ -55,10 +55,10 @@ function fnct_autogen_linux_for_target_brd {
 function fnct_configure_linux_for_target_brd {
 	print_headline "Configuring linux for ${1}"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
-	if ! test -f "stamp_configure_linux_for_${1}_h"; then
-		# make ARCH=arm CROSS_COMPILE=${CC} am335x_evm_config
-		make ARCH=arm CROSS_COMPILE=${linux_CC} ${2} || die
-		touch stamp_configure_linux_for_${1}_h
+	if [ ! -f .config ] ; then
+		# make ARCH=arm at91sam9x5ek_defconfig
+		make ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
+		# make ARCH=arm menuconfig || die
 		inform "Done it."
 	else
 		inform "Nothing to do."
@@ -77,7 +77,7 @@ function fnct_make_linux_for_target_brd {
 	print_headline "Making linux for ${1}"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_make_linux_for_${1}_h"; then
-		make ARCH=arm CROSS_COMPILE=${linux_CC} >${HOME}/log-Making_linux_for_${1}.log 2>&1 || die
+		make ARCH=arm CROSS_COMPILE=${RTEMS_CC} >${HOME}/log-Making_linux_for_${1}.log 2>&1 || die
 		touch stamp_make_linux_for_${1}_h
 		inform "Done it."
 	else
@@ -113,7 +113,7 @@ clean(){
 	print_headline "Cleaning linux"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if ! test -f "stamp_clean_linux_common_h"; then
-		make ARCH=arm CROSS_COMPILE=${linux_CC} distclean || die
+		make ARCH=arm CROSS_COMPILE=${RTEMS_CC} distclean || die
 		touch stamp_clean_linux_common_h
 		inform "Done it."
 	else

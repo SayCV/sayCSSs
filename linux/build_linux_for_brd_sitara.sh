@@ -43,7 +43,7 @@ export_rtems_ndk_envirment || die
 
 #Export variable local.
 export PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-linux
-export linux_CC=$NDK_TOOLCHAINS_PREFIX-
+export RTEMS_CC=$NDK_TOOLCHAINS_PREFIX-
 
 . $basedir/./build_linux_common.sh
 

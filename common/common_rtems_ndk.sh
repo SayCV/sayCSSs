@@ -36,6 +36,8 @@ function export_rtems_ndk_envirment {
 
 	export NDK_TOOLCHAINS_ROOT="${NDK_ROOT}"
 	export NDK_TOOLCHAINS_PREFIX="$NDK_TOOLCHAINS_ROOT/bin/arm-rtemseabi4.11"
+	
+	export RTEMS_CC="${NDK_TOOLCHAINS_PREFIX}-"
 
 	export PATH=$NDK_TOOLCHAINS_ROOT/bin:$PATH
 	
