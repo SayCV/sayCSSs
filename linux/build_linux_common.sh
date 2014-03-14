@@ -42,7 +42,8 @@ echo ${RTEMS_CC}
 
 check_requirements(){
 	print_headline "Checking requirements for ${1}"
-	inform "Nothing to do."
+	# inform "Nothing to do."
+	warning "Required bc.exe building latest linux on cygwin."
 	print_done
 }
 
