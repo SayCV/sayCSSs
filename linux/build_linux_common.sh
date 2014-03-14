@@ -59,7 +59,8 @@ function fnct_configure_linux_for_target_brd {
 	if [ ! -f .config ] ; then
 		# make ARCH=arm at91sam9x5ek_defconfig
 		make ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
-		make ARCH=arm menuconfig || die
+		# make ARCH=arm menuconfig || die
+		patch -bp1 < $basedir/./001-Fixed_defconfig_drivers_video_logo_mono_missing.patch
 		inform "Done it."
 	else
 		inform "Nothing to do."
