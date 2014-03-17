@@ -42,8 +42,10 @@ check_env
 export_rtems_ndk_envirment || die
 
 #Export variable local.
-export PRIVATE_BUILD_WORK_DIRECTORY=$HOME/sayndk-sitara-board-port-linux
-export RTEMS_CC=$NDK_TOOLCHAINS_PREFIX-
+export PRIVATE_BUILD_WORK_DIRECTORY=${HOME}/sayndk-sitara-board-port-linux
+export RTEMS_CC=${NDK_TOOLCHAINS_PREFIX}-
+
+export FLAG_BUILDING_AT_EXT_DIR=1
 
 . $basedir/./build_linux_common.sh
 
