@@ -73,7 +73,7 @@ function fnct_configure_linux_for_target_brd {
 	print_headline "Configuring linux for ${1}"
 	cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 	if [ ! -f .config ] ; then
-		if [ ${FLAG_BUILDING_AT_EXT_DIR} = 0 ] ; then
+		if [ ${FLAG_BUILDING_AT_EXT_DIR} = 1 ] ; then
 			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
 			# make ARCH=arm at91sam9x5ek_defconfig
 			# make -C $KDIR M=$PWD ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
