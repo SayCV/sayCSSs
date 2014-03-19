@@ -78,7 +78,7 @@ function fnct_configure_linux_for_target_brd {
 			# make ARCH=arm at91sam9x5ek_defconfig
 			# make -C $KDIR M=$PWD ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
 			make O=$KDIR ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
-			# make ARCH=arm menuconfig || die
+			make ARCH=arm menuconfig || die
 			cd $KDIR
 			patch -bp1 < $basedir/./001-Fixed_defconfig_drivers_video_logo_mono_missing.patch
 		else

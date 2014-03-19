@@ -42,7 +42,7 @@ function export_rtems_ndk_envirment {
 	export PATH=$NDK_TOOLCHAINS_ROOT/bin:$PATH
 	
 #	export CYGWIN="winsymlinks:native"
-#	export CYGWIN="winsymlinks:nativestrict"
+	export CYGWIN="winsymlinks:nativestrict"
 
 	print_done
 }
