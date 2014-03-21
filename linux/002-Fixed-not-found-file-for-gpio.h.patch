@@ -1,0 +1,26 @@
+From e85908014e5926dcfdb6a378f09743b13c92f665 Mon Sep 17 00:00:00 2001
+From: SayCV <sssxyc@163.com>
+Date: Fri, 21 Mar 2014 10:55:30 +0800
+Subject: [PATCH] Fixed not found file for dt-bindings/gpio/gpio.h: add
+ $(c_flags) to cmd_dtc
+
+---
+ scripts/Makefile.lib | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 49392ec..2d6d973 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -262,7 +262,7 @@ $(obj)/%.dtb.S: $(obj)/%.dtb
+ 	$(call cmd,dt_S_dtb)
+ 
+ quiet_cmd_dtc = DTC     $@
+-cmd_dtc = $(CPP) $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ; \
++cmd_dtc = $(CPP) $(c_flags) $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ; \
+ 	$(objtree)/scripts/dtc/dtc -O dtb -o $@ -b 0 \
+ 		-i $(dir $<) $(DTC_FLAGS) \
+ 		-d $(depfile).dtc.tmp $(dtc-tmp) ; \
+-- 
+1.9.0.msysgit.0
+

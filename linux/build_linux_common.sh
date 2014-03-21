@@ -79,8 +79,10 @@ function fnct_configure_linux_for_target_brd {
 			# make -C $KDIR M=$PWD ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
 			make O=$KDIR ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
 			make ARCH=arm menuconfig || die
-			cd $KDIR
+			cd $KDIR || die
 			patch -bp1 < $basedir/./001-Fixed_defconfig_drivers_video_logo_mono_missing.patch
+			cd $PRIVATE_BUILD_WORK_DIRECTORY || die
+			patch -bp1 < $basedir/./002-Fixed-not-found-file-for-gpio.h.patch
 		else
 			inform "Nothing to do."
 		fi
@@ -90,6 +92,7 @@ function fnct_configure_linux_for_target_brd {
 			make ARCH=arm CROSS_COMPILE=${RTEMS_CC} ${2} || die
 			make ARCH=arm menuconfig || die
 			patch -bp1 < $basedir/./001-Fixed_defconfig_drivers_video_logo_mono_missing.patch
+			patch -bp1 < $basedir/./002-Fixed-not-found-file-for-gpio.h.patch
 		else
 			inform "Nothing to do."
 		fi
